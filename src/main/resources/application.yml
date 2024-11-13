@@ -1,0 +1,18 @@
+server:
+  port: 1221
+
+#Mysql
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: jdbc:mysql://localhost:3307/bookdelivery
+    username: ${DATABASE_USERNAME:root}
+    password: ${DATABASE_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+      show_sql: true
