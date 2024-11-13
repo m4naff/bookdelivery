@@ -1,5 +1,6 @@
 package com.example.model;
 
+import com.example.security.jwt.CustomUserDetails;
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PrePersist;
