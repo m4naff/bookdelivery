@@ -23,6 +23,7 @@ public interface UserService {
      * @param userId The unique identifier of the user.
      * @return An {@link Optional} containing the {@link User} if found, or an empty {@link Optional} if not found.
      */
+    Optional<User> findById(Long userId);
 
     /**
      * Finds a user by their email address.
