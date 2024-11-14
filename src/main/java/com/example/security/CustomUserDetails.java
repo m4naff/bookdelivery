@@ -1,4 +1,4 @@
-package com.example.security.jwt;
+package com.example.security;
 
 import com.example.model.User;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serial;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 /**
