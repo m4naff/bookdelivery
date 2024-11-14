@@ -40,6 +40,7 @@ public class User {
         claims.put(TokenClaims.ROLES.getValue(), this.role);
         claims.put(TokenClaims.USER_FULL_NAME.getValue(), this.username);
         claims.put(TokenClaims.EMAIL.getValue(), this.email);
+        return claims;
     }
 
 }
