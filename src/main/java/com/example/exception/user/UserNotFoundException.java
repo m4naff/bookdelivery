@@ -1,5 +1,7 @@
 package com.example.exception.user;
 
+import com.example.exception.NotFoundException;
+
 import java.io.Serial;
 
 public class UserNotFoundException extends NotFoundException {

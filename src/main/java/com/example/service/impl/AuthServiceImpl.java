@@ -1,6 +1,10 @@
 package com.example.service.impl;
 
+import com.example.exception.token.RefreshTokenNotFoundException;
 import com.example.exception.user.EmailAlreadyExistsException;
+import com.example.exception.user.UserNotFoundException;
+import com.example.model.RefreshToken;
+import com.example.model.User;
 import com.example.payload.request.auth.LoginRequest;
 import com.example.payload.request.auth.SignUpRequest;
 import com.example.payload.request.auth.TokenRefreshRequest;
@@ -12,6 +16,9 @@ import com.example.service.AuthService;
 import com.example.service.RefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,16 +50,56 @@ public class AuthServiceImpl implements AuthService {
         if(userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException(request.getEmail());
         }
+
+        User user = User.builder()
+                .email(request.getEmail())
+                .fullName(request.getFullName())
+                .username(request.getUsername())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(request.getRole())
+                .build();
+
+        userRepository.save(user);
+
+        return "success";
     }
 
+    /**
+     * Logs a user in using the provided login credentials.
+     *
+     * @param request The login request containing user login credentials.
+     * @return A {@link JWTResponse} containing a JWT token and related information upon successful login.
+     */
     @Override
     public JWTResponse login(LoginRequest request) {
-        return null;
+
+        UsernamePasswordAuthenticationToken authToken =
+                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+
+        Authentication auth = authenticationManager.authenticate(authToken);
+        SecurityContextHolder.getContext().setAuthentication(auth);
+        String jwtToken = jwtUtils.generateJwtToken(auth);
+
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(UserNotFoundException::new);
+
+        return JWTResponse.builder()
+                .email(request.getEmail())
+                .token(jwtToken)
+                .refreshToken(refreshTokenService.createRefreshToken(user))
+                .build();
     }
 
+    /**
+     * Refreshes a user's authentication token.
+     *
+     * @param request The token refresh request containing the old token.
+     * @return A {@link TokenRefreshResponse} containing a new JWT token upon successful token refresh.
+     */
     @Override
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
-        return null;
+        RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken())
+                .orElseThrow(RefreshTokenNotFoundException::new);
     }
 
     @Override
