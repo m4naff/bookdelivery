@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.payload.request.auth.LoginRequest;
 import com.example.payload.request.auth.SignUpRequest;
+import com.example.payload.request.auth.TokenRefreshRequest;
 import com.example.payload.response.auth.JWTResponse;
 
 /**
@@ -25,5 +26,11 @@ public interface AuthService {
      */
     JWTResponse login(LoginRequest request);
 
-
+    /**
+     * Refreshes a user's authentication token.
+     *
+     * @param request The token refresh request containing the old token.
+     * @return A {@link TokenRefreshResponse} containing a new JWT token upon successful token refresh.
+     */
+    TokenRefreshResponse refreshToken(TokenRefreshRequest request);
 }
