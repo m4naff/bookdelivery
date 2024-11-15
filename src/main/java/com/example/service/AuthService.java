@@ -4,6 +4,7 @@ import com.example.payload.request.auth.LoginRequest;
 import com.example.payload.request.auth.SignUpRequest;
 import com.example.payload.request.auth.TokenRefreshRequest;
 import com.example.payload.response.auth.JWTResponse;
+import com.example.payload.response.auth.TokenRefreshResponse;
 
 /**
  * This interface defines authentication and authorization services.
