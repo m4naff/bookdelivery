@@ -1,5 +1,8 @@
 package com.example.service;
 
+import com.example.payload.request.auth.LoginRequest;
+import com.example.payload.request.auth.SignUpRequest;
+
 /**
  * This interface defines authentication and authorization services.
  */
@@ -12,6 +15,14 @@ public interface AuthService {
      * @return A string representing the result of the registration process.
      */
     String register(SignUpRequest request);
+
+    /**
+     * Logs a user in using the provided login credentials.
+     *
+     * @param request The login request containing user login credentials.
+     * @return A {@link JWTResponse} containing a JWT token and related information upon successful login.
+     */
+    JWTResponse login(LoginRequest request);
 
 
 }
