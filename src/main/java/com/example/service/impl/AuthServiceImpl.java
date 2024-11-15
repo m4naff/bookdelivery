@@ -11,6 +11,7 @@ import com.example.payload.request.auth.TokenRefreshRequest;
 import com.example.payload.response.auth.JWTResponse;
 import com.example.payload.response.auth.TokenRefreshResponse;
 import com.example.repository.UserRepository;
+import com.example.security.CustomUserDetails;
 import com.example.security.jwt.JwtUtils;
 import com.example.service.AuthService;
 import com.example.service.RefreshTokenService;
@@ -100,10 +101,37 @@ public class AuthServiceImpl implements AuthService {
     public TokenRefreshResponse refreshToken(TokenRefreshRequest request) {
         RefreshToken refreshToken = refreshTokenService.findByToken(request.getRefreshToken())
                 .orElseThrow(RefreshTokenNotFoundException::new);
+
+        if (!refreshTokenService.isRefreshExpired(refreshToken)) {
+            CustomUserDetails userDetails = new CustomUserDetails(refreshToken.getUser());
+            String newToken = jwtUtils.generateJwtToken(userDetails);
+
+            return TokenRefreshResponse.builder()
+                    .accessToken(newToken)
+                    .refreshToken(refreshToken.getToken())
+                    .build();
+        }
+
+        return null;
     }
 
+    /**
+     * Logs a user out by invalidating their token.
+     *
+     * @param token The user's authentication token to be invalidated.
+     * @return A string representing the result of the logout process.
+     */
     @Override
     public String logout(String token) {
-        return "";
+        String authToken = jwtUtils.extractTokenFromHeader(token);
+
+        if(jwtUtils.validateJwtToken(authToken)) {
+            Long id = jwtUtils.getIdFromToken(authToken);
+
+            refreshTokenService.deleteByUserId(id);
+
+            return "success";
+        }
+        return "failed";
     }
 }
