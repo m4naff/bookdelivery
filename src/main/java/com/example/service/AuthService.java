@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.payload.request.auth.LoginRequest;
 import com.example.payload.request.auth.SignUpRequest;
+import com.example.payload.response.auth.JWTResponse;
 
 /**
  * This interface defines authentication and authorization services.
