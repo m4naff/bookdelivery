@@ -34,4 +34,13 @@ public interface AuthService {
      * @return A {@link TokenRefreshResponse} containing a new JWT token upon successful token refresh.
      */
     TokenRefreshResponse refreshToken(TokenRefreshRequest request);
+
+    /**
+     * Logs a user out by invalidating their token.
+     *
+     * @param token The user's authentication token to be invalidated.
+     * @return A string representing the result of the logout process.
+     */
+    String logout(String token);
+
 }
