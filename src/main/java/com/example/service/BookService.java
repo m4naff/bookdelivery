@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.demo.BookDTO;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;
+import com.example.payload.request.book.PaginationRequest;
+import org.springframework.data.domain.Page;
 
 /**
  * This interface defines a service for managing books.
@@ -33,5 +35,13 @@ public interface BookService {
      * @return A {@link BookDTO} representing the book after the stock update.
      */
     BookDTO updateBookStockById(String bookId, BookUpdateStockRequest request);
+
+    /**
+     * Retrieves a paginated list of all books based on the provided request.
+     *
+     * @param paginationRequest The request containing pagination information.
+     * @return A {@link Page} of {@link BookDTO} objects representing the list of books.
+     */
+    Page<BookDTO> getAllBooks(PaginationRequest paginationRequest);
 
 }
