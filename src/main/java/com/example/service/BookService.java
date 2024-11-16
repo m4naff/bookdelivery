@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.demo.BookDTO;
 import com.example.payload.request.book.BookCreateRequest;
+import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;
 import com.example.payload.request.book.PaginationRequest;
 import org.springframework.data.domain.Page;
@@ -43,5 +44,14 @@ public interface BookService {
      * @return A {@link Page} of {@link BookDTO} objects representing the list of books.
      */
     Page<BookDTO> getAllBooks(PaginationRequest paginationRequest);
+
+    /**
+     * Updates a book by its unique identifier.
+     *
+     * @param bookId The unique identifier of the book.
+     * @param request The request containing the updated book information.
+     * @return A {@link BookDTO} representing the book after the update.
+     */
+    public BookDTO updateBookById(String bookId, BookUpdateRequest request);
 
 }
