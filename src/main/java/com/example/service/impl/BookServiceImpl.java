@@ -1,6 +1,7 @@
 package com.example.service.impl;
 
 import com.example.demo.BookDTO;
+import com.example.exception.book.BookNotFoundException;
 import com.example.model.Book;
 import com.example.model.mapper.book.BookMapper;
 import com.example.payload.request.book.BookCreateRequest;
@@ -35,9 +36,19 @@ public class BookServiceImpl implements BookService {
         return BookMapper.toDTO(bookRepository.save(bookEntityToBeSaved));
     }
 
+    /**
+     * Retrieves a book by its unique identifier.
+     *
+     * @param bookId The unique identifier of the book.
+     * @return A {@link BookDTO} representing the requested book.
+     */
     @Override
     public BookDTO getBookById(String bookId) {
-        return null;
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(
+                        () -> new BookNotFoundException(bookId)
+                );
     }
 
     @Override
