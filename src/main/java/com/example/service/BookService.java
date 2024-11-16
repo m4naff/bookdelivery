@@ -54,4 +54,13 @@ public interface BookService {
      */
     public BookDTO updateBookById(String bookId, BookUpdateRequest request);
 
+    /**
+     * Checks if a given amount of a book is available in stock.
+     *
+     * @param bookDTO The {@link BookDTO} representing the book to check.
+     * @param amount The amount of the book to check for availability.
+     * @return {@code true} if the specified amount is available in stock, {@code false} otherwise.
+     */
+    boolean isStockAvailable(BookDTO bookDTO, int amount);
+
 }
