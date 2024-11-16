@@ -1,5 +1,6 @@
 package com.example.model.mapper.book;
 
+import com.example.demo.BookDTO;
 import com.example.model.Book;
 import com.example.payload.request.book.BookCreateRequest;
 import lombok.experimental.UtilityClass;
@@ -27,5 +28,20 @@ public class BookMapper {
     }
 
 
-
+    /**
+     * Converts a {@link Book} entity to a {@link BookDTO}.
+     *
+     * @param book The {@link Book} entity to be converted.
+     * @return A {@link BookDTO} containing data from the source entity.
+     */
+    public static BookDTO toDTO(Book book) {
+        return BookDTO.builder()
+                .id(book.getId())
+                .isbn(book.getIsbn())
+                .name(book.getName())
+                .authorFullName(book.getAuthorFullName())
+                .price(book.getPrice())
+                .stock(book.getStock())
+                .build();
+    }
 }

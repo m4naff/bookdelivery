@@ -2,6 +2,7 @@ package com.example.service.impl;
 
 import com.example.demo.BookDTO;
 import com.example.model.Book;
+import com.example.model.mapper.book.BookMapper;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;
@@ -29,7 +30,9 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public BookDTO createBook(BookCreateRequest request) {
+        final Book bookEntityToBeSaved = BookMapper.mapForSaving(request);
 
+        return BookMapper.toDTO(bookRepository.save(bookEntityToBeSaved));
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
  * Data Transfer Object (DTO) representing book information.
  */
 @Getter
-@Setter
+@Builder
 @EqualsAndHashCode
 public class BookDTO {
 
