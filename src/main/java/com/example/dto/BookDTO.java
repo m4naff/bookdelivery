@@ -1,9 +1,8 @@
-package com.example.demo;
+package com.example.dto;
 
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigDecimal;
 

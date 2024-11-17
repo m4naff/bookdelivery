@@ -1,6 +1,6 @@
 package com.example.service.impl;
 
-import com.example.demo.BookDTO;
+import com.example.dto.BookDTO;
 import com.example.exception.book.BookNotFoundException;
 import com.example.exception.book.NoAvailableStockException;
 import com.example.model.Book;

@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.demo.BookDTO;
+import com.example.dto.BookDTO;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;

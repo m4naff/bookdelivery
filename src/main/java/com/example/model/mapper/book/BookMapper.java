@@ -1,6 +1,6 @@
 package com.example.model.mapper.book;
 
-import com.example.demo.BookDTO;
+import com.example.dto.BookDTO;
 import com.example.model.Book;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
