@@ -3,6 +3,7 @@ package com.example.model.mapper.book;
 import com.example.demo.BookDTO;
 import com.example.model.Book;
 import com.example.payload.request.book.BookCreateRequest;
+import com.example.payload.request.book.BookUpdateRequest;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -43,5 +44,22 @@ public class BookMapper {
                 .price(book.getPrice())
                 .stock(book.getStock())
                 .build();
+    }
+
+    /**
+     * Updates the {@link Book} entity given as a parameter using the
+     * {@link BookUpdateRequest} DTO object given as a parameter. <br>
+     * This method has no return, the update operation is performed through
+     * the reference of the object.
+     *
+     * @param bookEntityToBeUpdate {@link Book} entity to be updated
+     * @param request              {@link BookUpdateRequest} request DTO object containing update details
+     */
+    public static void mapForUpdating(Book bookEntityToBeUpdate, BookUpdateRequest request) {
+        bookEntityToBeUpdate.setIsbn(request.getIsbn());
+        bookEntityToBeUpdate.setName(request.getName());
+        bookEntityToBeUpdate.setAuthorFullName(request.getAuthorFullName());
+        bookEntityToBeUpdate.setStock(request.getStock());
+        bookEntityToBeUpdate.setPrice(request.getPrice());
     }
 }
