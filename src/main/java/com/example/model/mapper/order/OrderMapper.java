@@ -21,7 +21,7 @@ public class OrderMapper {
         return OrderDTO.builder()
                 .id(source.getId())
                 .user(UserMapper.toDTO(source.getUser()))
-                .orderItems(OrderItemMAPPER.toDTO(source.getOrderItems()))
+                .orderItems(OrderItemMapper.toDTO(source.getOrderItems()))
                 .createdAt(source.getCreatedAt())
                 .build();
     }
