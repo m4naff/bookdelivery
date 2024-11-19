@@ -62,4 +62,21 @@ public class BookMapper {
         bookEntityToBeUpdate.setStock(request.getStock());
         bookEntityToBeUpdate.setPrice(request.getPrice());
     }
+
+    /**
+     * Converts a {@link BookDTO} to a {@link Book} entity.
+     *
+     * @param bookDTO The {@link BookDTO} to be converted.
+     * @return A {@link Book} entity containing data from the source DTO.
+     */
+    public static Book toBook(BookDTO bookDTO) {
+        return Book.builder()
+                .id(bookDTO.getId())
+                .isbn(bookDTO.getIsbn())
+                .name(bookDTO.getName())
+                .authorFullName(bookDTO.getAuthorFullName())
+                .price(bookDTO.getPrice())
+                .stock(bookDTO.getStock())
+                .build();
+    }
 }
