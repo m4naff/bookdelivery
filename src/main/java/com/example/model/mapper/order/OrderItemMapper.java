@@ -49,4 +49,39 @@ public class OrderItemMapper {
                 .build();
     }
 
+    /**
+     * Converts an {@link OrderItemDTO} object to an {@link OrderItem}.
+     *
+     * @param orderItemDTO The {@link OrderItemDTO} object to be converted.
+     * @return An {@link OrderItem} object containing data from the source object.
+     */
+    public OrderItem toOrderItem(OrderItemDTO orderItemDTO) {
+        return OrderItem.builder()
+                .id(orderItemDTO.getId())
+                .book(toBook(orderItemDTO.getBook()))
+                .build();
+    }
+
+    private static Book toBook(OrderItemDTO.OrderItemBook orderItemBook) {
+        return Book.builder()
+                .id(orderItemBook.getId())
+                .name(orderItemBook.getName())
+                .authorFullName(orderItemBook.getAuthorFullName())
+                .isbn(orderItemBook.getIsbn())
+                .price(orderItemBook.getPrice())
+                .build();
+    }
+
+    /**
+     * Converts a collection of {@link OrderItemDTO} objects to a list of {@link OrderItem}.
+     *
+     * @param orderItemDTOs The collection of {@link OrderItemDTO} objects to be converted.
+     * @return A list of {@link OrderItem} objects containing data from the source objects.
+     */
+    public static List<OrderItem> toOrderItem(List<OrderItemDTO> orderItemDTOs) {
+
+        return orderItemDTOs.stream().map(OrderItemMapper::toOrderItem).toList();
+
+    }
+
 }
