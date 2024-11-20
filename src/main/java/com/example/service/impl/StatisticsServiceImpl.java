@@ -42,8 +42,14 @@ public class StatisticsServiceImpl implements StatisticsService {
         throw new AccessDeniedException("You cannot access order statistics");
     }
 
+    /**
+     * Retrieves overall order statistics.
+     *
+     * @param paginationRequest The request containing pagination information.
+     * @return A {@link Page} of {@link OrderReportDTO} objects representing overall order statistics.
+     */
     @Override
     public Page<OrderReportDTO> getAllOrderStatistics(PaginationRequest paginationRequest) {
-        return null;
+        return orderRepository.findAllOrderStatistics(paginationRequest.toPageable());
     }
 }
