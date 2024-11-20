@@ -62,4 +62,28 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
     """)
     Page<OrderReportDTO> findOrderStatisticsByCustomerId(@Param("customerId") Long customerId, Pageable pageable);
 
+
+    /**
+     * <p>Retrieves a paginated list of order statistics for all customers.</p>
+     * <p>
+     * This method retrieves a paginated list of order statistics, including the following items:
+     * <p>- Total count of orders</p>
+     * <p>- Total count of unique books</p>
+     * <p>- Total price</p>
+     *
+     * <p>The statistics are grouped by the month and year of order creation date, and are ordered by
+     * year in descending order.</p>
+     *
+     * @param pageable The pagination information.
+     * @return A {@link Page} of {@link OrderReportDTO} objects containing the order statistics.
+     */
+    @Query("""
+    select new com.example.dto.OrderReportDTO
+    (function('monthname',o.createdAt),function('year',o.createdAt),count(o.id),count(b.id),sum(b.price))
+    from Order o inner join o.orderItems items inner join items.book b
+    group by function('monthname',o.createdAt),function('year',o.createdAt)
+    order by function('year', o.createdAt) desc
+""")
+    Page<OrderReportDTO> findAllOrderStatistics(Pageable pageable);
+
 }
