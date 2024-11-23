@@ -6,6 +6,8 @@ import com.example.model.mapper.book.BookMapper;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;
+import com.example.payload.request.book.PaginationRequest;
+import com.example.payload.response.CustomPageResponse;
 import com.example.payload.response.auth.CustomResponse;
 import com.example.payload.response.book.BookCreatedResponse;
 import com.example.payload.response.book.BookGetResponse;
@@ -14,6 +16,7 @@ import com.example.service.BookService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -87,6 +90,20 @@ public class BookController {
     public CustomResponse<BookGetResponse> getBookById(@PathVariable String bookId) {
         final BookDTO bookEntity = bookService.getBookById(bookId);
         final BookGetResponse response = BookMapper.toGetResponse(bookEntity);
+
+        return CustomResponse.ok(response);
+    }
+
+    /**
+     * Returns all {@link Book} entities.
+     *
+     * @return list of Book entities
+     */
+    @GetMapping("all")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_CUSTOMER')")
+    public CustomResponse<CustomPageResponse<BookGetResponse>> getBooks(@RequestBody @Valid PaginationRequest paginationRequest) {
+        final Page<BookDTO> bookEntitiesFromDb = bookService.getAllBooks(paginationRequest);
+        final CustomPageResponse<BookGetResponse> response = BookMapper.toGetResponse(bookEntitiesFromDb);
 
         return CustomResponse.ok(response);
     }

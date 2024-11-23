@@ -4,10 +4,12 @@ import com.example.dto.BookDTO;
 import com.example.model.Book;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
+import com.example.payload.response.CustomPageResponse;
 import com.example.payload.response.book.BookCreatedResponse;
 import com.example.payload.response.book.BookGetResponse;
 import com.example.payload.response.book.BookUpdatedResponse;
 import lombok.experimental.UtilityClass;
+import org.springframework.data.domain.Page;
 
 /**
  * Utility class for mapping book-related entities.
@@ -140,6 +142,15 @@ public class BookMapper {
                 .stock(source.getStock())
                 .price(source.getPrice())
                 .build();
+    }
 
+    /**
+     * Converts a {@link Page<BookDTO>} to a {@link CustomPageResponse<BookGetResponse>}.
+     *
+     * @param sources The source {@link Page<BookDTO>} to be converted.
+     * @return A {@link CustomPageResponse<BookGetResponse>} containing converted data.
+     */
+    public static CustomPageResponse<BookGetResponse> toGetResponse(Page<BookDTO> sources) {
+        return CustomPageResponse.of(sources.map(BookMapper::toGetResponse));
     }
 }
