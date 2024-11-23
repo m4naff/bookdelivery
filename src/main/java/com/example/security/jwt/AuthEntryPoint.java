@@ -45,13 +45,13 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
         body.put("status", HttpServletResponse.SC_UNAUTHORIZED);
         body.put("error", "Unauthorized");
         body.put("message", authException.getMessage());
-        body.put("path", request.getContextPath());
+        body.put("path", request.getServletPath());
 
 
         LOGGER.info("AuthEntryPoint | commence | status: {}", HttpServletResponse.SC_UNAUTHORIZED);
         LOGGER.info("AuthEntryPoint | commence | error: {}", "Unauthorized");
         LOGGER.info("AuthEntryPoint | commence | message: {}", authException.getMessage());
-        LOGGER.info("AuthEntryPoint | commence | path: {}", request.getContextPath());
+        LOGGER.info("AuthEntryPoint | commence | path: {}", request.getServletPath());
 
         final ObjectMapper mapper = new ObjectMapper();
         mapper.writeValue(response.getOutputStream(), body);
