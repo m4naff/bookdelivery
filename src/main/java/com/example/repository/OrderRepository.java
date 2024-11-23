@@ -54,11 +54,11 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
      */
     @Query("""
         select new com.example.dto.OrderReportDTO
-        (function('monthname',o.createdAt),function('year',o.createdAt),count(o.id),count(b.id),sum(b.price))
+        (MONTH(o.createdAt),YEAR(o.createdAt),count(o.id),count(b.id),sum(b.price))
         from Order o inner join o.orderItems items inner join items.book b
         where (o.user.id = :customerId)
-        group by function('monthname',o.createdAt),function('year',o.createdAt)
-        order by function('year', o.createdAt) desc 
+        group by MONTH(o.createdAt),YEAR(o.createdAt)
+        order by YEAR(o.createdAt) desc
     """)
     Page<OrderReportDTO> findOrderStatisticsByCustomerId(@Param("customerId") Long customerId, Pageable pageable);
 
@@ -79,10 +79,10 @@ public interface OrderRepository extends JpaRepository<Order, Long>, JpaSpecific
      */
     @Query("""
     select new com.example.dto.OrderReportDTO
-    (function('monthname',o.createdAt),function('year',o.createdAt),count(o.id),count(b.id),sum(b.price))
+    (MONTH(o.createdAt),YEAR(o.createdAt),count(o.id),count(b.id),sum(b.price))
     from Order o inner join o.orderItems items inner join items.book b
-    group by function('monthname',o.createdAt),function('year',o.createdAt)
-    order by function('year', o.createdAt) desc
+    group by MONTH(o.createdAt),YEAR(o.createdAt)
+    order by YEAR(o.createdAt) desc
 """)
     Page<OrderReportDTO> findAllOrderStatistics(Pageable pageable);
 
