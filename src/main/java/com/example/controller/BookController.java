@@ -8,6 +8,7 @@ import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.request.book.BookUpdateStockRequest;
 import com.example.payload.response.auth.CustomResponse;
 import com.example.payload.response.book.BookCreatedResponse;
+import com.example.payload.response.book.BookGetResponse;
 import com.example.payload.response.book.BookUpdatedResponse;
 import com.example.service.BookService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -71,6 +72,21 @@ public class BookController {
     public CustomResponse<BookUpdatedResponse> updateBookById(@PathVariable String bookId, @RequestBody @Valid final BookUpdateRequest request) {
         final BookDTO updatedBookEntity = bookService.updateBookById(bookId, request);
         final BookUpdatedResponse response = BookMapper.toUpdatedResponse(updatedBookEntity);
+
+        return CustomResponse.ok(response);
+    }
+
+    /**
+     * Retrieves a Book by its ID.
+     *
+     * @param bookId The ID of the Book to retrieve.
+     * @return Response containing information about the requested Book.
+     */
+    @GetMapping("/{bookId}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_CUSTOMER')")
+    public CustomResponse<BookGetResponse> getBookById(@PathVariable String bookId) {
+        final BookDTO bookEntity = bookService.getBookById(bookId);
+        final BookGetResponse response = BookMapper.toGetResponse(bookEntity);
 
         return CustomResponse.ok(response);
     }

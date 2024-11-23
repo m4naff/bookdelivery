@@ -5,6 +5,7 @@ import com.example.model.Book;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
 import com.example.payload.response.book.BookCreatedResponse;
+import com.example.payload.response.book.BookGetResponse;
 import com.example.payload.response.book.BookUpdatedResponse;
 import lombok.experimental.UtilityClass;
 
@@ -118,5 +119,27 @@ public class BookMapper {
                 .stock(source.getStock())
                 .price(source.getPrice())
                 .build();
+    }
+
+    /**
+     * Converts a {@link BookDTO} to a {@link BookGetResponse}.
+     *
+     * @param source The source {@link BookDTO} to be converted.
+     * @return A {@link BookGetResponse} containing data from the source DTO.
+     */
+    public static BookGetResponse toGetResponse(BookDTO source) {
+        if (source == null) {
+            return null;
+        }
+
+        return BookGetResponse.builder()
+                .id(source.getId())
+                .isbn(source.getIsbn())
+                .name(source.getName())
+                .authorFullName(source.getAuthorFullName())
+                .stock(source.getStock())
+                .price(source.getPrice())
+                .build();
+
     }
 }
