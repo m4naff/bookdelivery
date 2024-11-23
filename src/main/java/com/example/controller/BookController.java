@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dto.BookDTO;
+import com.example.model.Book;
 import com.example.model.mapper.book.BookMapper;
 import com.example.payload.request.book.BookCreateRequest;
 import com.example.payload.request.book.BookUpdateRequest;
@@ -53,7 +54,23 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public CustomResponse<BookUpdatedResponse> updateStock(@PathVariable String bookId, @RequestBody @Valid final BookUpdateStockRequest request) {
         final BookDTO updatedBookEntity = bookService.updateBookStockById(bookId, request);
-        final BookUpdatedResponse response = BookMapper.toUpdateResponse(updatedBookEntity);
+        final BookUpdatedResponse response = BookMapper.toUpdatedResponse(updatedBookEntity);
+
+        return CustomResponse.ok(response);
+    }
+
+    /**
+     * The endpoint that updates the {@link Book} entity.
+     *
+     * @param bookId  Represents the id of the {@link Book} entity to be updated.
+     * @param request Represents the request body of the Book entity to be updated.
+     * @return BookUpdatedResponse -> Represents the response body of the Book entity to be updated.
+     */
+    @PutMapping("/bookId")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public CustomResponse<BookUpdatedResponse> updateBookById(@PathVariable String bookId, @RequestBody @Valid final BookUpdateRequest request) {
+        final BookDTO updatedBookEntity = bookService.updateBookById(bookId, request);
+        final BookUpdatedResponse response = BookMapper.toUpdatedResponse(updatedBookEntity);
 
         return CustomResponse.ok(response);
     }
