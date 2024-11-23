@@ -3,8 +3,11 @@ package com.example.controller;
 import com.example.dto.BookDTO;
 import com.example.model.mapper.book.BookMapper;
 import com.example.payload.request.book.BookCreateRequest;
+import com.example.payload.request.book.BookUpdateRequest;
+import com.example.payload.request.book.BookUpdateStockRequest;
 import com.example.payload.response.auth.CustomResponse;
 import com.example.payload.response.book.BookCreatedResponse;
+import com.example.payload.response.book.BookUpdatedResponse;
 import com.example.service.BookService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -37,6 +40,22 @@ public class BookController {
         final BookCreatedResponse response = BookMapper.toCreatedResponse(createdBookEntity);
 
         return CustomResponse.created(response);
+    }
+
+    /**
+     * Updates a {@link Book}'s stock
+     *
+     * @param bookId  The specified book id
+     * @param request {@link BookUpdateStockRequest}
+     * @return Response entity of {@link BookUpdatedResponse}
+     */
+    @PutMapping("/stock-amout/{bookId}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public CustomResponse<BookUpdatedResponse> updateStock(@PathVariable String bookId, @RequestBody @Valid final BookUpdateStockRequest request) {
+        final BookDTO updatedBookEntity = bookService.updateBookStockById(bookId, request);
+        final BookUpdatedResponse response = BookMapper.toUpdateResponse(updatedBookEntity);
+
+        return CustomResponse.ok(response);
     }
 
 }
