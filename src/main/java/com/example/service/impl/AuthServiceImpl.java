@@ -15,6 +15,7 @@ import com.example.security.CustomUserDetails;
 import com.example.security.jwt.JwtUtils;
 import com.example.service.AuthService;
 import com.example.service.RefreshTokenService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -122,6 +123,7 @@ public class AuthServiceImpl implements AuthService {
      * @return A string representing the result of the logout process.
      */
     @Override
+    @Transactional
     public String logout(String token) {
         String authToken = jwtUtils.extractTokenFromHeader(token);
 
