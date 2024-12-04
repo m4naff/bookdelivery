@@ -4,6 +4,7 @@ import com.example.dto.OrderDTO;
 import com.example.model.Order;
 import com.example.model.mapper.user.UserMapper;
 import com.example.payload.response.order.OrderCreatedResponse;
+import com.example.payload.response.order.OrderGetResponse;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -33,7 +34,7 @@ public class OrderMapper {
      * @param orderDTO The {@link OrderDTO} object to be converted.
      * @return An {@link OrderCreatedResponse} containing data from the source DTO.
      */
-    public static OrderCreatedResponse toGetResponse(OrderDTO orderDTO) {
+    public static OrderCreatedResponse toCreatedResponse(OrderDTO orderDTO) {
         return OrderCreatedResponse.builder()
                 .id(orderDTO.getId())
                 .user(orderDTO.getUser())
@@ -41,4 +42,22 @@ public class OrderMapper {
                 .orderItems(orderDTO.getOrderItems())
                 .build();
     }
+
+    /**
+     * Converts an {@link OrderDTO} object to an {@link OrderGetResponse}.
+     *
+     * @param source The {@link OrderDTO} object to be converted.
+     * @return An {@link OrderGetResponse} containing data from the source DTO.
+     */
+    public static OrderGetResponse toGetResponse(OrderDTO source) {
+        return OrderGetResponse.builder()
+                .id(source.getId())
+                .user(source.getUser())
+                .orderItems(source.getOrderItems())
+                .createdAt(source.getCreatedAt())
+                .build();
+    }
+
+
+
 }
