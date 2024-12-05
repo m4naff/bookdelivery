@@ -5,6 +5,7 @@ import com.example.model.Order;
 import com.example.model.mapper.user.UserMapper;
 import com.example.payload.response.CustomPageResponse;
 import com.example.payload.response.order.OrderCreatedResponse;
+import com.example.payload.response.order.OrderGetBetweenDatesResponse;
 import com.example.payload.response.order.OrderGetByCustomerResponse;
 import com.example.payload.response.order.OrderGetResponse;
 import lombok.experimental.UtilityClass;
@@ -84,5 +85,30 @@ public class OrderMapper {
      */
     public static CustomPageResponse<OrderGetByCustomerResponse> toGetByCustomerResponse(Page<OrderDTO> sources) {
         return CustomPageResponse.of(sources.map(OrderMapper::toGetByCustomerResponse));
+    }
+
+    /**
+     * Converts an {@link OrderDTO} object to an {@link OrderGetBetweenDatesResponse}.
+     *
+     * @param source The {@link OrderDTO} object to be converted.
+     * @return An {@link OrderGetBetweenDatesResponse} containing data from the source DTO.
+     */
+    public static OrderGetBetweenDatesResponse toGetBetweenDatesResponse(OrderDTO source) {
+        return OrderGetBetweenDatesResponse.builder()
+                .id(source.getId())
+                .user(source.getUser())
+                .orderItems(source.getOrderItems())
+                .createdAt(source.getCreatedAt())
+                .build();
+    }
+
+    /**
+     * Converts a {@link Page<OrderDTO>} to a {@link CustomPageResponse<OrderGetBetweenDatesResponse>}.
+     *
+     * @param sources The source {@link Page<OrderDTO>} to be converted.
+     * @return A {@link CustomPageResponse<OrderGetBetweenDatesResponse>} containing converted data.
+     */
+    public static CustomPageResponse<OrderGetBetweenDatesResponse> toGetBetweenDatesResponse(Page<OrderDTO> sources) {
+        return CustomPageResponse.of(sources.map(OrderMapper::toGetBetweenDatesResponse));
     }
 }
