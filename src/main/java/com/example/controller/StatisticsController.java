@@ -35,6 +35,14 @@ public class StatisticsController {
         return CustomResponse.ok(orderReportResponse);
     }
 
-
+    @GetMapping
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public CustomResponse<CustomPageResponse<OrderReportResponse>> getAllOrderStatistics(
+            @RequestBody PaginationRequest paginationRequest
+    ) {
+        Page<OrderReportDTO> orderReportDTOS = statisticsService.getAllOrderStatistics(paginationRequest);
+        CustomPageResponse<OrderReportResponse> orderReportResponse = OrderReportMapper.toOrderReportResponseList(orderReportDTOS);
+        return CustomResponse.ok(orderReportResponse);
+    }
 
 }
